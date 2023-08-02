@@ -11,16 +11,16 @@
     <form id="survey-form" method="post" action="">
         <fieldset>
             <label id="name-label" for="name">Name
-                <input id="name" type='text' placeholder="Enter your name" required>
+                <input class="name" id="name" type='text' placeholder="Enter your name" required>
             </label>
             <label id="email-label" for="email">Email
-                <input id="email" type="email" placeholder="Enter your Email" required>
+                <input class="name" id="email" type="email" placeholder="Enter your Email" required>
             </label>
             <label id="number-label" for="number">Age(optional)
-                <input id="number" type="number" max="120" min="10" placeholder="Age">
+                <input class="name" id="number" type="number" max="120" min="10" placeholder="Age">
             </label>
-            <label>Which option best describes your current role?
-                <select id="dropdown">
+            <label  for="dropdown">Which option best describes your current role?
+                <select class="name" id="dropdown">
                     <option disabled selected>Select current role</option>
                     <option value="1">Student</option>
                     <option value="2">Full time job</option>
@@ -30,18 +30,37 @@
         </fieldset>
         <fieldset>
             <p>Would you recommend us to a friend?</p>
-            <label>
-                <input type="radio" name="recommend">Definitely
+            <label for="definitely">
+                <input id="definitely" type="radio" name="recommend" value="8">Definitely
             </label>
-            <label>
-                <input type="radio" name="recommend">Maybe
+            <label for="maybe">
+                <input id="maybe" type="radio" name="recommend" value="9">Maybe
             </label>
-            <label>
-                <input type="radio" name="recommend">Not sure
+            <label for="not-sure">
+                <input id="not-sure" type="radio" name="recommend" value="10">Not sure
             </label>
         </fieldset>
+        <fieldset>
+            <p>What would you like to see improved? (Check all that apply)</p>
+            <label for="front">
+                <input id="front" type="checkbox" value="4">Front-end Projects
+            </label>
+            <label for="back">
+                <input id="back" type="checkbox" value="5">Back-end Projects
+            </label>
+            <label for="data">
+                <input id="data" type="checkbox" value="6">Data Visualization
+            </label>
+            <label for="forum">
+                <input id="forum" type="checkbox" value="7">Forum
+            </label>
+        </fieldset>
+        <fieldset>
+            <label for="textarea">Any comments or suggestions?
+                <textarea id="textarea" placeholder="Enter you comment here"></textarea>
+            </label>
+        </fieldset>
+        <input class="submit" id="submit" type="submit" value="Submit">
     </form>
-
-
 </body>
 </html>
