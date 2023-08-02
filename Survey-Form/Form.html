@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey-Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="title">Hypothetical Survey Form</h1>
+    <p id="description">Thank you for taking the time to help us improve the platform</p>
+    <form id="survey-form" method="post" action="">
+        <fieldset>
+            <label id="name-label" for="name">Name
+                <input id="name" type='text' placeholder="Enter your name" required>
+            </label>
+            <label id="email-label" for="email">Email
+                <input id="email" type="email" placeholder="Enter your Email" required>
+            </label>
+            <label id="number-label" for="number">Age(optional)
+                <input id="number" type="number" max="120" min="10" placeholder="Age">
+            </label>
+            <label>Which option best describes your current role?
+                <select id="dropdown">
+                    <option disabled selected>Select current role</option>
+                    <option value="1">Student</option>
+                    <option value="2">Full time job</option>
+                    <option value="3">Other</option>
+                </select>
+            </label>
+        </fieldset>
+        <fieldset>
+            <p>Would you recommend us to a friend?</p>
+            <label>
+                <input type="radio" name="recommend">Definitely
+            </label>
+            <label>
+                <input type="radio" name="recommend">Maybe
+            </label>
+            <label>
+                <input type="radio" name="recommend">Not sure
+            </label>
+        </fieldset>
+    </form>
+
+
+</body>
+</html>
