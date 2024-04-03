@@ -1,0 +1,595 @@
+//class
+
+
+
+//Використайте ключове слово class та напишіть constructor, щоб створити клас Vegetable.
+
+//Клас Vegetable дозволяє створити об’єкт-овоч із властивістю name, що передається до constructor.
+
+// Змініть код лише під цим рядком
+class Vegetable {
+  constructor (name) {
+    this.name = name;
+  }
+}
+// Змініть код лише над цим рядком
+
+const carrot = new Vegetable('carrot');
+console.log(carrot.name); // Повинно показувати 'carrot'
+
+
+
+						GETTER SETTER
+
+Використайте ключове слово class, щоб створити клас Thermostat. constructor приймає температуру в градусах Фаренгейта.
+
+У класі створіть getter, щоб отримати температуру в градусах Цельсія, та setter, що приймає температуру в градусах Цельсія.
+
+Пам’ятайте, що C = 5/9 * (F - 32) та F = C * 9.0 / 5 + 32, де F є значенням температури за Фаренгейтом, а C є значенням за Цельсієм.
+
+Примітка: під час реалізації ви відстежуватимете температуру в межах класу за шкалою Фаренгейта або Цельсія.
+
+У цьому сила гетерів й сетерів. Ви створюєте API для іншого користувача, який може отримати правильний результат, незалежно від того, що саме ви досліджуєте.
+
+Іншими словами, ви приховуєте деталі реалізації від користувача.
+
+
+// Змініть код лише під цим рядком
+class  Thermostat {
+  constructor(far){
+    this._far = far;
+  }
+  get temperature(){
+    return 5/9 * (this._far - 32)
+  }
+  set temperature(cel) {
+    this._far = cel * 9.0 / 5 + 32
+  }
+}
+// Змініть код лише над цим рядком
+
+const thermos = new Thermostat(76); // Налаштування у шкалі Фаренгейта
+let temp = thermos.temperature; // 24.44 градусів за Цельсієм
+thermos.temperature = 26;
+temp = thermos.temperature; // 26 градусів за Цельсієм
+
+
+
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+                              ----------------------------OOP-----------------------
+
+
+                                          Додавання методів після успадкування
+
+
+
+Функція-конструктор, яка успадковує об’єкт prototype від функції-конструктора супертипу, всеодно може мати власні методи на додачу до успадкованих.
+
+Наприклад, Bird є конструктором, який успадковує prototype від Animal:
+
+function Animal() { }
+Animal.prototype.eat = function() {
+  console.log("nom nom nom");
+};
+function Bird() { }
+Bird.prototype = Object.create(Animal.prototype);
+Bird.prototype.constructor = Bird;
+Окрім успадкованого від Animal, за бажанням можна додати поведінку, унікальну для об’єктів Bird. У такому разі Bird отримує функцію fly(). Функції додаються до прототипу Bird так само, як і будь-яка функція-конструктор:
+
+Bird.prototype.fly = function() {
+  console.log("I'm flying!");
+};
+Тепер екземпляри Bird матимуть методи eat() та fly():
+
+let duck = new Bird();
+duck.eat();
+duck.fly();
+duck.eat() показуватиме рядок nom nom nom на консолі, а duck.fly() показуватиме рядок I'm flying!.
+
+Додайте необхідний код так, щоб об’єкт Dog успадковував від Animal, а прототип конструктора Dog був налаштований на Dog. Потім додайте метод bark() до об’єкта Dog, щоб beagle міг eat() та bark(). Метод bark() має вивести Woof! на консоль.
+
+
+function Animal() { }
+Animal.prototype.eat = function() { console.log("nom nom nom"); };
+
+function Dog() { }
+
+// Змініть код лише під цим рядком
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+Dog.prototype.bark = function(){
+  console.log('Woof!');
+}
+
+
+
+// Змініть код лише над цим рядком
+
+let beagle = new Dog();
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+                                    Міксини, щоб налаштувати спільну поведінку між непов’язаними об’єктами
+Як ви помітили, поведінка розділяється внаслідок успадкування. Однак є випадки, коли успадкування не є найкращим рішенням. Успадкування не працює належним чином з непов’язаними об’єктами (наприклад, Bird та Airplane). Вони обидві здатні літати, але Bird не належить до типу Airplane і навпаки.
+
+Для непов’язаних об’єктів краще використовувати міксини. Міксини дозволяють об’єктам використовувати набір функцій.
+
+let flyMixin = function(obj) {
+  obj.fly = function() {
+    console.log("Flying, wooosh!");
+  }
+};
+flyMixin приймає будь-який об’єкт та надає йому метод fly.
+
+let bird = {
+  name: "Donald",
+  numLegs: 2
+};
+
+let plane = {
+  model: "777",
+  numPassengers: 524
+};
+
+flyMixin(bird);
+flyMixin(plane);
+У прикладі bird та plane передані до flyMixin, що потім присвоює функцію fly до кожного об’єкта. Тепер bird та plane можуть літати:
+
+bird.fly();
+plane.fly();
+Консоль виведе рядок Flying, wooosh! для кожного виклику .fly().
+
+Зверніть увагу, як міксин дозволяє непов’язаним об’єктам bird та plane використовувати метод fly повторно.
+
+Створіть міксин під назвою glideMixin, який визначає метод під назвою glide. Потім використайте glideMixin, щоб надати bird та boat можливість плавно рухатись.
+
+
+let bird = {
+  name: "Donald",
+  numLegs: 2
+};
+
+let boat = {
+  name: "Warrior",
+  type: "race-boat"
+};
+
+// Змініть код лише під цим рядком
+let glideMixin = function(obj){
+  obj.glide = function(){
+    console.log('wshhhhh');
+  }
+}
+glideMixin(bird);
+glideMixin(boat);
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+IIFE для створення модуля
+Вираз негайно викликаної функції (IIFE) часто використовують, щоб згрупувати пов’язану функціональність в один об’єкт або модуль. Наприклад, попереднє завдання визначило два міксини:
+
+function glideMixin(obj) {
+  obj.glide = function() {
+    console.log("Gliding on the water");
+  };
+}
+function flyMixin(obj) {
+  obj.fly = function() {
+    console.log("Flying, wooosh!");
+  };
+}
+Ми можемо згрупувати ці міксини в модуль:
+
+let motionModule = (function () {
+  return {
+    glideMixin: function(obj) {
+      obj.glide = function() {
+        console.log("Gliding on the water");
+      };
+    },
+    flyMixin: function(obj) {
+      obj.fly = function() {
+        console.log("Flying, wooosh!");
+      };
+    }
+  }
+})();
+Зверніть увагу, що ви маєте вираз негайно викликаної функції (IIFE), який повертає об’єкт motionModule. Повернений об’єкт містить поведінку міксинів як властивості об’єкта. Перевага модуля в тому, що поведінку руху можна розмістити в одному об’єкті, який потім можуть використовувати інші частини коду. Ось приклад використання:
+
+motionModule.glideMixin(duck);
+duck.glide();
+Створіть модуль під назвою funModule, щоб загорнути два міксини (isCuteMixin та singMixin). funModule має повернути об’єкт.
+
+let funModule = (function(){ 
+  return {
+isCuteMixin : function(obj) {
+  obj.isCute = function() {
+    return true;
+  };
+},
+singMixin : function(obj) {
+  obj.sing = function() {
+    console.log("Singing to an awesome tune");
+  };
+}
+  }
+})();
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+Використання методу reduce для аналізу даних
+Array.prototype.reduce(), або просто reduce() — найпоширеніша операція із масивами у JavaScript. Ви можете вирішити практично будь-яку проблему обробки масиву, використовуючи метод reduce.
+
+Метод reduce дозволяє використовувати загальні форми обробки масивів і можна сказати, що filter та map є похідними від reduce. Метод reduce перебирає кожен елемент у масиві та повертає єдине значення (тобто рядок, число, об’єкт, масив). Це досягається за допомогою функції зворотного виклику, яка відбувається на кожній ітерації.
+
+Функція зворотного виклику приймає чотири аргументи. Перший аргумент відомий як акумулятор, якому призначається повернене значення функції зворотного виклику з попередньої ітерації. Другим є елемент, який наразі опрацьовується. Третім є індекс цього елемента. Четвертий — це масив, на якому було викликано reduce.
+
+Крім того, reduce має додатковий параметр, який приймає початкове значення акумулятора. Якщо цей другий параметр не використовується, то перша ітерація пропускається, а друга передається першому елементу масиву як акумулятор.
+
+Нижче наведено приклад використання reduce на масиві users, що повертає сумарний вік усіх користувачів. Аби було простіше, у прикладі використовується лише перший та другий аргументи.
+
+const users = [
+  { name: 'John', age: 34 },
+  { name: 'Amy', age: 20 },
+  { name: 'camperCat', age: 10 }
+];
+
+const sumOfAges = users.reduce((sum, user) => sum + user.age, 0);
+console.log(sumOfAges);
+Консоль показуватиме значення 64.
+
+В іншому прикладі можна побачити, що повернутий об’єкт може містити імена користувачів як властивості та їхній вік як значення.
+
+const users = [
+  { name: 'John', age: 34 },
+  { name: 'Amy', age: 20 },
+  { name: 'camperCat', age: 10 }
+];
+
+const usersObj = users.reduce((obj, user) => {
+  obj[user.name] = user.age;
+  return obj;
+}, {});
+console.log(usersObj);
+Консоль показуватиме значення { John: 34, Amy: 20, camperCat: 10 }.
+
+Змінна watchList містить масив об’єктів з інформацією про декілька фільмів. Використайте reduce, щоб знайти середній рейтинг IMDB фільмів, режисером яких є Christopher Nolan. Пригадайте з попередніх завдань, як вам можуть допомогти filter та map. Можливо, доведеться створити інші змінні та повернути середній рейтинг із функції getRating. Зверніть увагу, що рейтинги зберігаються в об’єктах як рядки і їх потрібно перетворити на числа, перш ніж використовувати в математичних операціях.
+
+// Глобальна змінна
+const watchList = [
+  {
+    "Title": "Inception",
+    "Year": "2010",
+    "Rated": "PG-13",
+    "Released": "16 Jul 2010",
+    "Runtime": "148 min",
+    "Genre": "Action, Adventure, Crime",
+    "Director": "Christopher Nolan",
+    "Writer": "Christopher Nolan",
+    "Actors": "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",
+    "Plot": "A thief, who steals corporate secrets through use of dream-sharing technology, is given the inverse task of planting an idea into the mind of a CEO.",
+    "Language": "English, Japanese, French",
+    "Country": "USA, UK",
+    "Awards": "Won 4 Oscars. Another 143 wins & 198 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+    "Metascore": "74",
+    "imdbRating": "8.8",
+    "imdbVotes": "1,446,708",
+    "imdbID": "tt1375666",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "Interstellar",
+    "Year": "2014",
+    "Rated": "PG-13",
+    "Released": "07 Nov 2014",
+    "Runtime": "169 min",
+    "Genre": "Adventure, Drama, Sci-Fi",
+    "Director": "Christopher Nolan",
+    "Writer": "Jonathan Nolan, Christopher Nolan",
+    "Actors": "Ellen Burstyn, Matthew McConaughey, Mackenzie Foy, John Lithgow",
+    "Plot": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    "Language": "English",
+    "Country": "USA, UK",
+    "Awards": "Won 1 Oscar. Another 39 wins & 132 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjIxNTU4MzY4MF5BMl5BanBnXkFtZTgwMzM4ODI3MjE@._V1_SX300.jpg",
+    "Metascore": "74",
+    "imdbRating": "8.6",
+    "imdbVotes": "910,366",
+    "imdbID": "tt0816692",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "The Dark Knight",
+    "Year": "2008",
+    "Rated": "PG-13",
+    "Released": "18 Jul 2008",
+    "Runtime": "152 min",
+    "Genre": "Action, Adventure, Crime",
+    "Director": "Christopher Nolan",
+    "Writer": "Jonathan Nolan (screenplay), Christopher Nolan (screenplay), Christopher Nolan (story), David S. Goyer (story), Bob Kane (characters)",
+    "Actors": "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine",
+    "Plot": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, the caped crusader must come to terms with one of the greatest psychological tests of his ability to fight injustice.",
+    "Language": "English, Mandarin",
+    "Country": "USA, UK",
+    "Awards": "Won 2 Oscars. Another 146 wins & 142 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg",
+    "Metascore": "82",
+    "imdbRating": "9.0",
+    "imdbVotes": "1,652,832",
+    "imdbID": "tt0468569",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "Batman Begins",
+    "Year": "2005",
+    "Rated": "PG-13",
+    "Released": "15 Jun 2005",
+    "Runtime": "140 min",
+    "Genre": "Action, Adventure",
+    "Director": "Christopher Nolan",
+    "Writer": "Bob Kane (characters), David S. Goyer (story), Christopher Nolan (screenplay), David S. Goyer (screenplay)",
+    "Actors": "Christian Bale, Michael Caine, Liam Neeson, Katie Holmes",
+    "Plot": "After training with his mentor, Batman begins his fight to free crime-ridden Gotham City from the corruption that Scarecrow and the League of Shadows have cast upon it.",
+    "Language": "English, Urdu, Mandarin",
+    "Country": "USA, UK",
+    "Awards": "Nominated for 1 Oscar. Another 15 wins & 66 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg",
+    "Metascore": "70",
+    "imdbRating": "8.3",
+    "imdbVotes": "972,584",
+    "imdbID": "tt0372784",
+    "Type": "movie",
+    "Response": "True"
+  },
+  {
+    "Title": "Avatar",
+    "Year": "2009",
+    "Rated": "PG-13",
+    "Released": "18 Dec 2009",
+    "Runtime": "162 min",
+    "Genre": "Action, Adventure, Fantasy",
+    "Director": "James Cameron",
+    "Writer": "James Cameron",
+    "Actors": "Sam Worthington, Zoe Saldana, Sigourney Weaver, Stephen Lang",
+    "Plot": "A paraplegic marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home.",
+    "Language": "English, Spanish",
+    "Country": "USA, UK",
+    "Awards": "Won 3 Oscars. Another 80 wins & 121 nominations.",
+    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg",
+    "Metascore": "83",
+    "imdbRating": "7.9",
+    "imdbVotes": "876,575",
+    "imdbID": "tt0499549",
+    "Type": "movie",
+    "Response": "True"
+  }
+];
+
+function getRating(watchList) {
+  // Змініть код лише під цим рядком
+  let nol = watchList.filter(film => film.Director == 'Christopher Nolan');
+  let sum = nol.reduce((sum, film) =>sum  + Number(film.imdbRating), 0);
+  let averageRating = sum / nol.length;
+
+  // Змініть код лише над цим рядком
+  return averageRating;
+}
+
+console.log(getRating(watchList));
+
+
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+
+
+
+Поросяча латина
+Поросяча латина — це спосіб шифрування англійських слів. Правила такі:
+
+- Якщо слово починається з приголосного звуку, то перший приголосний або сполучення приголосних переміщуються в кінець слова і додається ay.
+
+- Якщо слово починається з голосного звуку, то вкінці просто додається way.
+
+Перекладіть поданий рядок на поросячу латину. Відомо, що при вводі всі рядки будуть складатись з англійських слів у нижньому регістрі.
+
+
+function translatePigLatin(str) {
+  let strnew = ''
+  
+  if(str[0].match(/[aeiou]/)){
+    strnew = str + 'way';
+    
+  } else if (str.match(/[aeiou]/gi) === null){
+strnew = str + 'ay';
+  } else {
+     let indexstr = str.slice(0,str.indexOf(str.match(/[aeiou]/)[0]));
+     strnew = str.replace(indexstr, '') + indexstr + 'ay';
+  }
+  
+  return strnew
+}
+
+console.log(translatePigLatin("rhythm"));
+
+
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+Знайдіть пропущену літеру в переданому діапазоні літер та поверніть її.
+
+Якщо у діапазоні наявні всі літери, поверніть undefined.
+
+
+function fearNotLetter(str) {
+  for(let i = 0; i < str.length-1; i++){
+    if(str.charCodeAt(i+1) - str.charCodeAt(i) !== 1) {
+      
+      return String.fromCharCode(str.charCodeAt(i)+1);
+    }
+  } return undefined;
+}
+
+fearNotLetter("abce");
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+Сума всіх непарних чисел Фібоначчі
+Маючи додатнє ціле число num, поверніть суму всіх непарних чисел Фібоначчі, які менші чи дорівнюють num.
+
+Першими двома числами в послідовності Фібоначчі є 0 та 1. Кожне додаткове число у послідовності є сумою двох попередніх чисел. Першими сімома числами в послідовності Фібоначчі є 1, 1, 2, 3, 5 і 8.
+
+Наприклад, sumFibs(10) має повертати 10, оскільки всі непарні числа Фібоначчі, які менші або дорівнюють 10 — це 1, 1, 3 і 5.
+
+function sumFibs(num) {
+  let a = 0;
+  let b = 1;
+  let n = 0;
+  let arr = [1];
+  for(let i = 0; a+b <= num; i++){
+    n = a + b;
+    if(n % 2 != 0) {arr.push(n)}
+    a = b;
+    b = n;
+
+  }
+  return arr.reduce((sum, elem)=> sum + elem);
+}
+
+sumFibs(4);
+
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+Сума всіх простих чисел
+Просте число — це ціле число, яке більше за 1 та має два дільники: 1 і саме число. Наприклад, 2 є простим числом, оскільки воно ділиться лише на 1 і 2. І навпаки, 4 не є простим числом, оскільки воно ділиться на 1, 2 і 4.
+
+Перепишіть sumPrimes таким чином, щоб поверталася сума всіх простих чисел, які менші або дорівнюють num.
+
+
+function sumPrimes(num) {
+ let sum = 0;
+  for (let i = 2; i < num + 1; i++){
+    let n = true
+    for(let j = 2; j <= Math.sqrt(i); j++){
+      if(i % j == 0){
+        n = false;
+        break;
+      }
+    }
+if(n == true) {sum += i}
+
+  }
+  
+  return sum;
+}
+
+sumPrimes(10);
+
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+Найменше спільне кратне
+Знайдіть найменше спільне кратне заданих параметрів, яке можна поділити на обидва з них, а також на всі послідовні числа в діапазоні між цими параметрами.
+
+Діапазоном буде масив з двох чисел, які необов’язково будуть у числовому порядку.
+
+Наприклад, якщо дано 1 і 3, знайдіть найменше спільне кратне обох чисел (1 і 3), яке рівно ділиться на всі числа між 1 і 3. Тут відповіддю буде 6.
+
+
+unction smallestCommons(arr) {
+  let [min,max] = arr.sort((a,b)=> a - b);
+  let range = Array(max - min + 1).fill(0).map((_,i)=> min + i);
+  //НОД
+  let gcd = (a,b) => b===0 ? a : gcd(b, a%b);
+  //НОК
+  let lcm = (a,b) => a * b / gcd(a,b);
+  return range.reduce((res,i) => lcm(res,i));
+}
+
+smallestCommons([1,5]);
+
+
+||||||||||||||||||||||||||||||||||||||||||||||
+
+Нездоланна сила
+Вирівняйте вкладений масив. Ви повинні врахувати різні рівні вкладення.
+
+function steamrollArray(arr) {
+  const arrres = [];
+  for(let i = 0; i < arr.length; i++){
+    if(Array.isArray(arr[i])){
+      arrres.push(...steamrollArray(arr[i]))
+    }else {arrres.push(arr[i])}
+  }
+  return arrres
+}
+
+steamrollArray([1, [2], [3, [[4]]]]);
+
+
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+Створіть людину
+Заповніть конструктор об’єкта, використовуючи наведені нижче методи:
+
+getFirstName()
+getLastName()
+getFullName()
+setFirstName(first)
+setLastName(last)
+setFullName(first, last)
+Запустіть тести, щоб побачити очікуваний вивід для кожного методу. Ці методи повинні бути єдиними доступними засобами для взаємодії з об’єктом. Кожен тест оголосить новий екземпляр Person як new Person('Bob', 'Ross').
+
+const Person = function(first, last) {
+  let firstName = first;
+  let lastName = last;
+
+  this.getFirstName = function() {
+    return firstName;
+  };
+
+  this.getLastName = function() {
+    return lastName;
+  };
+
+  this.getFullName = function() {
+    return this.getFirstName() + ' ' + this.getLastName();
+  };
+
+  this.setFirstName = function(first) {
+    return firstName = first;
+  };
+  this.setLastName = function(last) {
+    return lastName = last;
+  };
+  this.setFullName = function(first, last){
+    this.setFirstName(first);
+    this.setLastName(last);
+    return this.getFullName();
+
+  };
+  
+};
