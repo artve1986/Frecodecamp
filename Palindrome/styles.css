@@ -36,6 +36,21 @@ h1, h2 {
     background-color: white;
     box-shadow: 0 6px 6px #002ead;
 }
+#text-input{
+    margin-top: 5px;
+}
+#check-btn{
+    background-color: #ffa500;
+    padding: 5px;
+    margin-left: 5px;
+    border-radius: 10px;
+    border: none;
+}
+.div-result{
+    width: 100%;
+    margin-top: 5px;
+    text-align: center;
+}
 .definition {
     width: min(100vw, 450px);
     min-height: 100px;
